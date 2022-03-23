@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.2'
+    }
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.5.10'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.slippi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation('org.postgresql:postgresql')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	// https://mvnrepository.com/artifact/com.google.cloud/spring-cloud-gcp-starter
+	implementation group: 'com.google.cloud', name: 'spring-cloud-gcp-starter', version: '2.0.8'
+	// https://mvnrepository.com/artifact/com.google.cloud/spring-cloud-gcp-starter-sql-postgresql
+	implementation group: 'com.google.cloud', name: 'spring-cloud-gcp-starter-sql-postgresql', version: '2.0.8'
+
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.slippi.replays.Application"
+    }
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+apply plugin: 'com.google.cloud.tools.appengine'
+appengine {  // App Engine tasks configuration
+    deploy {   // deploy configuration
+        projectId = 'GCLOUD_CONFIG' // gcloud config set project
+        version = 'GCLOUD_CONFIG'   // gcloud to generate a version
+		stopPreviousVersion = true  // default - stop the current version
+    	promote = true              // default - & make this the current version
+    }
+}
