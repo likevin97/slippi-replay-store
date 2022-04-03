@@ -10,6 +10,7 @@ import com.slippi.replays.translators.SlippiReplayTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class ReplayController {
 	ReplayService replayService;
 
 	@GetMapping("/")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
@@ -35,6 +37,7 @@ public class ReplayController {
 	 */
 	@RequestMapping("/all-replays")
 	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<List<SlippiFileDto>> getAllReplays() {
 		List<SlippiFileDto> replays = replayService.getAllReplays()
 		.stream().map(
@@ -51,6 +54,7 @@ public class ReplayController {
 	 */
 	@RequestMapping("/replays-by-connect-code")
 	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<List<ReplayEntity>> getReplaysByConnectCode(@RequestParam String connectCode) {
 		List<ReplayEntity> replays = replayService.getReplaysByConnectCode(connectCode);
 
@@ -66,6 +70,7 @@ public class ReplayController {
 	 */
 	@PostMapping(value = "/add-replay")
 	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<String> addReplay(@RequestParam MultipartFile file, @RequestParam String connectCode) {
 		try {
 			replayService.save(file, connectCode);
@@ -83,6 +88,7 @@ public class ReplayController {
 	 */
 	@PostMapping(value = "/delete-older-than")
 	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<Long> deleteReplays(@RequestParam int days) {
 		return new ResponseEntity<Long>(replayService.deleteReplays(days), HttpStatus.OK);
 	}
