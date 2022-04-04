@@ -24,25 +24,30 @@ public class ReplayEntity implements Serializable {
     @Column(name = "connect_code")
     private String connectCode;
 
-    @Column(name = "slp_name")
-    private String slpName;
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "content_type")
+    private String contentType;
 
     @Lob
-    @Column(name = "slp_data")
+    @Column(name = "file_data")
     @Type(type="org.hibernate.type.BinaryType")
-    private byte[] slpData;
+    private byte[] fileData;
     
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime createdAt;
 
+
     public ReplayEntity() {
     }
 
-    public ReplayEntity(UUID id, String connectCode, String slpName, byte[] slpData, OffsetDateTime createdAt) {
+    public ReplayEntity(UUID id, String connectCode, String fileName, String contentType, byte[] fileData, OffsetDateTime createdAt) {
         this.id = id;
         this.connectCode = connectCode;
-        this.slpName = slpName;
-        this.slpData = slpData;
+        this.fileName = fileName;
+        this.contentType = contentType;
+        this.fileData = fileData;
         this.createdAt = createdAt;
     }
 
@@ -62,22 +67,29 @@ public class ReplayEntity implements Serializable {
         this.connectCode = connectCode;
     }
 
-    public String getSlpName() {
-        return this.slpName;
+    public String getFileName() {
+        return this.fileName;
     }
 
-    public void setSlpName(String slpName) {
-        this.slpName = slpName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public byte[] getSlpData() {
-        return this.slpData;
+    public String getContentType() {
+        return this.contentType;
     }
 
-    public void setSlpData(byte[] slpData) {
-        this.slpData = slpData;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
+    public byte[] getFileData() {
+        return this.fileData;
+    }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
+    }
 
     public OffsetDateTime getCreatedAt() {
         return this.createdAt;
@@ -86,5 +98,6 @@ public class ReplayEntity implements Serializable {
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
 
 }

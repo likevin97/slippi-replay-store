@@ -31,8 +31,9 @@ public class ReplayService {
      */
     public ReplayEntity save(MultipartFile file, String connectCode) throws IOException {
         ReplayEntity replayEntity = new ReplayEntity();
-        replayEntity.setSlpName(StringUtils.cleanPath(file.getOriginalFilename()));
-        replayEntity.setSlpData(file.getBytes());
+        replayEntity.setFileName(StringUtils.cleanPath(file.getOriginalFilename()));
+        replayEntity.setFileData(file.getBytes());
+        replayEntity.setContentType(file.getContentType());
         replayEntity.setConnectCode(connectCode);
         replayEntity.setCreatedAt(OffsetDateTime.now());
 

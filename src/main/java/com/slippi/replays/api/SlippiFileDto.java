@@ -7,16 +7,17 @@ public class SlippiFileDto {
     private UUID id;
     private String connectCode;
     private String fileName; 
+    private String contentType;
     private OffsetDateTime createdAt;
-
 
     public SlippiFileDto() {
     }
 
-    public SlippiFileDto(UUID id, String connectCode, String fileName, OffsetDateTime createdAt) {
+    public SlippiFileDto(UUID id, String connectCode, String fileName, String contentType, OffsetDateTime createdAt) {
         this.id = id;
         this.connectCode = connectCode;
         this.fileName = fileName;
+        this.contentType = contentType;
         this.createdAt = createdAt;
     }
 
@@ -44,6 +45,14 @@ public class SlippiFileDto {
         this.fileName = fileName;
     }
 
+    public String getContentType() {
+        return this.contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     public OffsetDateTime getCreatedAt() {
         return this.createdAt;
     }
@@ -52,23 +61,5 @@ public class SlippiFileDto {
         this.createdAt = createdAt;
     }
 
-    public SlippiFileDto id(UUID id) {
-        setId(id);
-        return this;
-    }
 
-    public SlippiFileDto connectCode(String connectCode) {
-        setConnectCode(connectCode);
-        return this;
-    }
-
-    public SlippiFileDto fileName(String fileName) {
-        setFileName(fileName);
-        return this;
-    }
-
-    public SlippiFileDto createdAt(OffsetDateTime createdAt) {
-        setCreatedAt(createdAt);
-        return this;
-    }
 }

@@ -8,9 +8,9 @@ public class SlippiReplayTranslator {
     public static SlippiFileDto entityToObject(ReplayEntity replayEntity) {
         SlippiFileDto slippiFileDto = new SlippiFileDto();
 
-
         slippiFileDto.setConnectCode(replayEntity.getConnectCode());
-        slippiFileDto.setFileName(replayEntity.getSlpName());
+        slippiFileDto.setFileName(replayEntity.getFileName());
+        slippiFileDto.setContentType(replayEntity.getContentType());
         slippiFileDto.setId(replayEntity.getId());
         slippiFileDto.setCreatedAt(replayEntity.getCreatedAt());
 
