@@ -25,4 +25,4 @@ apt-get -y --force-yes install openjdk-11-jdk
 update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/jre/bin/java
 
 # Start server
-authbind --deep java -jar slippi-replay-store-0.0.1-SNAPSHOT.jar
+authbind --deep java -jar -Dspring.profiles.active=prod slippi-replay-store-0.0.1-SNAPSHOT.jar
