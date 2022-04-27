@@ -2,13 +2,17 @@ package com.slippi.replays;
 
 import java.util.Arrays;
 
+import com.github.valb3r.letsencrypthelper.tomcat.TomcatWellKnownLetsEncryptChallengeEndpointConfig;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
+@Import(TomcatWellKnownLetsEncryptChallengeEndpointConfig.class) // Enable LetsEncrypt certficate management
 public class Application {
 
 	public static void main(String[] args) {
