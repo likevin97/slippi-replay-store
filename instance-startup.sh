@@ -10,13 +10,10 @@ echo "Project ID: ${PROJECTID} Bucket: ${BUCKET}"
 gsutil cp gs://${BUCKET}/*.jar .
 
 # Set current public IP to domain
-IP=$(curl -s api.ipify.org) 
-gcloud dns record-sets delete www.slippi-replay.store. \
-    --type=A \
-    --zone=slippi-replay-store-zone
-gcloud dns record-sets create www.slippi-replay.store. \
+IP=$(curl -s api.ipify.org)
+gcloud dns record-sets update www.slippi-replay.store. \
     --rrdatas=$IP \
-    --ttl=TTL \
+    --ttl=300 \
     --type=A \
     --zone=slippi-replay-store-zone
 
