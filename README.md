@@ -1,1 +1,5 @@
 # slippi-replay-store
+
+Spring Boot API service with Postgres support serves as the backend [likevin97/slippilab](https://github.com/likevin97/slippilab), a Super Smash Bros. Melee Slippi replay viewer written in Typescript.
+
+This service is deployed onto a Compute Engine VM instance in GCP.
