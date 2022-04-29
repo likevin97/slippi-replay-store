@@ -3,11 +3,15 @@ package com.slippi.replays;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.slippi.replays.entities.ReplayEntity;
 import com.slippi.replays.repositories.ReplayRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +52,24 @@ public class ReplayService {
 	 */
     public List<ReplayEntity> getReplaysByConnectCode(String connectCode) {
         return replayRepository.findByConnectCode(connectCode);
+    }
+
+    /**
+	 * Delete all replays by connect code except for the "num" latest replays
+	 * @param connectCode
+	 * @param num
+	 */
+    public List<UUID> getXLatestReplaysByConnectCode(String connectCode, int num) {
+        List<UUID> exclusionList = replayRepository
+            .findAllByConnectCode(connectCode, 
+                PageRequest.of(0, num, Sort.by("createdAt").descending()))
+                    .stream().map((t) -> t.getId()).collect(Collectors.toList());
+
+        return exclusionList;
+    }
+
+    public void deleteReplaysExcludingLatest(String connectCode, List<UUID> exclusionList) {
+        replayRepository.deleteByExcludedId(connectCode, exclusionList);
     }
 
 
