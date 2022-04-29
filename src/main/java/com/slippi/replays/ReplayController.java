@@ -1,9 +1,11 @@
 package com.slippi.replays;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.slippi.replays.api.SlippiFileDto;
+import com.slippi.replays.entities.ReplayEntityProjection;
 import com.slippi.replays.entities.ReplayEntity;
 import com.slippi.replays.translators.SlippiReplayTranslator;
 
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +64,20 @@ public class ReplayController {
 		return new ResponseEntity<List<ReplayEntity>>(replays, HttpStatus.OK);
 	}
 
+	/**
+	 * Delete all replays by connect code except for the "num" latest replays
+	 * @param connectCode
+	 * @param num
+	 */
+	@DeleteMapping("/delete-replays-by-connect-code-excluding-latest")
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public ResponseEntity<Void> getLatestReplaysByConnectCode(@RequestParam String connectCode, @RequestParam int num) {
+		List<UUID> exclusionList = replayService.getXLatestReplaysByConnectCode(connectCode, num);
+		replayService.deleteReplaysExcludingLatest(connectCode, exclusionList);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
 
 	/**
 	 * Add replay to database with connect_code, file_name, file_data, and created_at columns
@@ -86,7 +103,7 @@ public class ReplayController {
 	 * @param days
 	 * @return the number of replays deleted
 	 */
-	@PostMapping(value = "/delete-older-than")
+	@DeleteMapping(value = "/delete-older-than")
 	@ResponseBody
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<Long> deleteReplays(@RequestParam int days) {
